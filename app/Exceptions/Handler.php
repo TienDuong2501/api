@@ -1,15 +1,11 @@
 <?php
-
 namespace App\Exceptions;
-
+use App\Exceptions\ExceptionTrait;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 class Handler extends ExceptionHandler
 {
+    use ExceptionTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -18,7 +14,6 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         //
     ];
-
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
@@ -28,7 +23,6 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
-
     /**
      * Report or log an exception.
      *
@@ -41,7 +35,6 @@ class Handler extends ExceptionHandler
     {
         parent::report($exception);
     }
-
     /**
      * Render an exception into an HTTP response.
      *
@@ -51,22 +44,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        //ngoai le voi phan update product
         if ($request->expectsJson()) {
-            if ($exception instanceof ModelNotFoundException) {
-                return response()->json([
-                    'errors' => 'Product Model not found'
-                ],Response::HTTP_NOT_FOUND);
-            }
-
-
-            //ngoai le phan them
-            if ($exception instanceof NotFoundHttpException) {
-                return response()->json([
-                    'errors' => 'Incorect route'
-                ],Response::HTTP_NOT_FOUND);
-            }
+            return $this->apiException($request,$exception);
         }
         return parent::render($request, $exception);
     }
 }
+
+?>
