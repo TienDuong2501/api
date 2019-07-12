@@ -17,11 +17,11 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Product $product)
-    {
-        // return $product;
-        return ReviewResource::collection($product->reviews);
-    }
+    // public function index(Product $product)
+    // {
+    //     // return $product;
+    //     return ReviewResource::collection($product->reviews);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -39,15 +39,15 @@ class ReviewController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ReviewRequest $request,Product $product)
-    {
+    // public function store(ReviewRequest $request,Product $product)
+    // {
 
-        $review = new Review($request->all());
-        $product->reviews()->save($review);
-        return response([
-            'data' => new ReviewResource($review)
-                    ],Response::HTTP_CREATED);
-    }
+    //     $review = new Review($request->all());
+    //     $product->reviews()->save($review);
+    //     return response([
+    //         'data' => new ReviewResource($review)
+    //                 ],Response::HTTP_CREATED);
+    // }
 
     /**
      * Display the specified resource.
